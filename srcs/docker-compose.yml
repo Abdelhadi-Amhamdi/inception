@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress
+    volumes:
+      - wp:/var/www/aamhamdi/html
+    depends_on:
+      - mariadb
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    ports:
+      - 8081:8081
+    volumes:
+      - wp:/var/www/aamhamdi/html
+    depends_on:
+      - wordpress
+  
+volumes:
+  wp :
+    driver : local
