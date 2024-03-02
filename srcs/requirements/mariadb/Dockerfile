@@ -6,18 +6,15 @@ WORKDIR /mariadb
 
 COPY . .
 
-RUN apt -y update;\
-    apt -y upgrade;\
-    apt -y install mariadb-server
+RUN apt -y update;apt -y install mariadb-server
 
 EXPOSE 3306
 
 RUN chmod +x ./conf/setup.sh
 
-# ENV MYSQL_DATABASE=test
-# ENV MYSQL_USER=user1
-# ENV MYSQL_PASSWORD=root
 
-RUN sed -i 's/^socket =.*/port = 3306/' /etc/mysql/my.cnf
+RUN sed -i 's/^# port =.*/port = 3306/' /etc/mysql/my.cnf
+RUN sed -i 's/^#user.*/user = mysql/' /etc/mysql/mariadb.conf.d/50-server.cnf
+RUN sed -i 's/^bind-address.*/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
 
 CMD [ "./conf/setup.sh" ]
