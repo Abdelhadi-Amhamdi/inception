@@ -5,9 +5,7 @@ WORKDIR /wordpress
 
 COPY . .
 
-RUN apt -y update;\
-    apt -y upgrade;\
-    apt -y install curl php php-fpm php-mysql mariadb-client;
+RUN apt -y update; apt -y install curl php php-mysql php-fpm mariadb-client
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
