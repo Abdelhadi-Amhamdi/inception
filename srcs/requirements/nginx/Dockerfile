@@ -6,9 +6,7 @@ WORKDIR /ngnix
 
 COPY . .
 
-RUN apt -y update;\
-    apt -y upgrade;\
-    apt -y install nginx openssl ;
+RUN apt -y update;apt -y install nginx openssl;
 
 EXPOSE 8081
 
