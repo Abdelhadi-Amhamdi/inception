@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir -p /var/www/aamhamdi/html/
+
 mkdir -p ssl/
 openssl genrsa -out /ngnix/ssl/test.key 2048;
 openssl req -new -key /ngnix/ssl/test.key -out /ngnix/ssl/test.csr \
@@ -10,7 +12,7 @@ openssl x509 -req -days 365 -in /ngnix/ssl/test.csr \
 cat << del > /etc/nginx/sites-enabled/test.conf
 
 server {
-        listen 8081 ssl;
+        listen 443 ssl;
         ssl_certificate         /ngnix/ssl/test.crt;       
         ssl_certificate_key     /ngnix/ssl/test.key;
         root /var/www/aamhamdi/html/;

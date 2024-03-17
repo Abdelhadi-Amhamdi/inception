@@ -13,6 +13,10 @@ cleanc:
 	@CONTAINERS=$$(docker container ls -qa);\
 	if [ -n "$$CONTAINERS" ]; then docker container rm -f $$CONTAINERS; fi
 
+cleanv:
+	@CONTAINERS=$$(docker volume ls -q);\
+	if [ -n "$$CONTAINERS" ]; then docker volume rm -f $$CONTAINERS; fi
+
 re:
 	docker-compose -f srcs/docker-compose.yml up --build
 
