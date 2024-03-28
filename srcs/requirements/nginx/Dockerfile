@@ -4,9 +4,9 @@ FROM debian
 
 WORKDIR /ngnix
 
-COPY . .
-
 RUN apt -y update;apt -y install nginx openssl;
+
+COPY . .
 
 EXPOSE 443
 

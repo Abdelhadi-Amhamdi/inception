@@ -1,5 +1,5 @@
 all:
-	docker-compose -f srcs/docker-compose.yml up
+	docker-compose -f srcs/docker-compose.yml up 
 
 stop:
 	docker-compose -f srcs/docker-compose.yml down
@@ -16,6 +16,8 @@ cleanc:
 cleanv:
 	@CONTAINERS=$$(docker volume ls -q);\
 	if [ -n "$$CONTAINERS" ]; then docker volume rm -f $$CONTAINERS; fi
+
+clean: cleani cleanc cleanv
 
 re:
 	docker-compose -f srcs/docker-compose.yml up --build

@@ -6,7 +6,7 @@ services:
     build: ./requirements/mariadb
     image: mariadb
     volumes:
-      - ma:/mariadb
+      - ma:/var/lib/mysql
     env_file:
       - .env
   wordpress:
@@ -14,7 +14,7 @@ services:
     build: ./requirements/wordpress
     image: wordpress
     volumes:
-      - wp:/var/www/aamhamdi/html/
+      - wp:/var/www/wordpress/html/
     depends_on:
       - mariadb
     env_file:
@@ -25,13 +25,47 @@ services:
     image: nginx
     ports:
       - 443:443
+      - 8080:8080
+      - 8081:8081
     volumes:
-      - wp:/var/www/aamhamdi/html
+      - wp:/var/www/wordpress/html
     depends_on:
       - wordpress
+  redis:
+    container_name: redis
+    build: ./requirements/bonus/redis
+    image: redis 
+  ftp:
+    container_name: ftp
+    build: ./requirements/bonus/ftp
+    image: ftp
+    ports:
+      - 21:21
+    env_file:
+      - .env
+  adminer:
+    container_name: adminer
+    build: ./requirements/bonus/adminer
+    ports:
+      - 80:80
+    image: adminer
+  website:
+    container_name: website
+    build: ./requirements/bonus/website
+    image: website
+    ports:
+      - 3000:3000
 volumes:
   wp :
     driver : local
+    driver_opts:
+      type: none
+      device: /home/aamhamdi/data/wp
+      o: bind
   ma :
     driver : local
+    driver_opts:
+      type: none
+      device: /home/aamhamdi/data/ma
+      o: bind
 
