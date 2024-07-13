@@ -1,21 +1,18 @@
 
-
-FROM debian
+FROM debian:bullseye
 
 WORKDIR /mariadb
 
-COPY . .
-
-RUN apt -y update;apt -y install mariadb-server
+RUN apt -y update;
+RUN apt-get -y install mariadb-server --no-install-recommends
 
 EXPOSE 3306
 
-RUN chmod +x ./conf/setup.sh
+COPY . .
 
-
-RUN sed -i 's/^# port =.*/port = 3306/' /etc/mysql/my.cnf
-RUN sed -i 's/^#user.*/user = mysql/' /etc/mysql/mariadb.conf.d/50-server.cnf
-RUN sed -i 's/^bind-address.*/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
-
+RUN chmod +x ./conf/setup.sh; \
+sed -i 's/^# port =.*/port = 3306/' /etc/mysql/my.cnf; \
+sed -i 's/^#user.*/user = mysql/' /etc/mysql/mariadb.conf.d/50-server.cnf; \
+sed -i 's/^bind-address.*/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
 
 CMD [ "./conf/setup.sh" ]

@@ -1,5 +1,7 @@
 all:
-	docker-compose -f srcs/docker-compose.yml up 
+	mkdir -p /home/aamhamdi/data/ma
+	mkdir -p /home/aamhamdi/data/wp
+	docker-compose -f srcs/docker-compose.yml up  --no-deps
 
 stop:
 	docker-compose -f srcs/docker-compose.yml down

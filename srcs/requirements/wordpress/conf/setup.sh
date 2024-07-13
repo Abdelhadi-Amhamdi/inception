@@ -17,19 +17,17 @@ wp core install --url="https://aamhamdi42.fr" --title="inception" --admin_user="
  
 
 chown -R www-data:www-data /var/www/wordpress/html
-chmod -R u+rw /var/www/wordpress/html 
+chmod -R u+rw /var/www/wordpress/html
+
 wp plugin install redis-cache --activate --allow-root
 wp config set WP_REDIS_HOST redis --allow-root
-
-
-
 wp plugin update --all --allow-root
 
 
 cp -r  * /var/www/wordpress/html/
-
 wp redis enable --allow-root
 # wp redis flushall --allow-root
 
-php-fpm8.2 -F -O
+while [ 1 ]; do echo "hello"; sleep 10; done
+# php-fpm -F -O
 

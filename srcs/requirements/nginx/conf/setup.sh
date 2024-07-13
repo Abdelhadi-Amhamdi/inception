@@ -11,6 +11,7 @@ openssl x509 -req -days 365 -in /ngnix/ssl/test.csr \
 
 cat << del > /etc/nginx/sites-enabled/wordpress.conf
 server {
+        include mime.types;
         listen 443 ssl;
         ssl_certificate         /ngnix/ssl/test.crt;       
         ssl_certificate_key     /ngnix/ssl/test.key;
@@ -25,8 +26,10 @@ del
 
 cat << del > /etc/nginx/sites-enabled/website.conf
 server {
-        listen 8080;
-     
+        include mime.types;
+        listen 8080 ssl;
+        ssl_certificate         /ngnix/ssl/test.crt;       
+        ssl_certificate_key     /ngnix/ssl/test.key;
         location / {
                 proxy_pass http://website:3000;
         }
@@ -36,11 +39,13 @@ del
 
 cat << del > /etc/nginx/sites-enabled/adminer.conf
 server {
-    listen 8081;
-
-    location / {
-        proxy_pass http://adminer:80;
-    }
+        include mime.types;
+        listen 8081 ssl;
+        ssl_certificate         /ngnix/ssl/test.crt;       
+        ssl_certificate_key     /ngnix/ssl/test.key;
+        location / {
+                proxy_pass http://adminer:80;
+        }
 }
 del
 
