@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir -p /var/www/wordpress/html/
+mkdir -p /var/www/wordpress/
 
 mkdir -p ssl/
 openssl genrsa -out /ngnix/ssl/test.key 2048;
@@ -11,12 +11,18 @@ openssl x509 -req -days 365 -in /ngnix/ssl/test.csr \
 
 cat << del > /etc/nginx/sites-enabled/wordpress.conf
 server {
+
         include mime.types;
         listen 443 ssl;
-        ssl_certificate         /ngnix/ssl/test.crt;       
+        server_name aamhamdi42.fr www.aamhamdi42.fr;
+
+        ssl_protocols TLSv1.3;
+        ssl_certificate         /ngnix/ssl/test.crt;
         ssl_certificate_key     /ngnix/ssl/test.key;
-        root /var/www/wordpress/html/;
+
+        root /var/www/wordpress;
         index index.php index.html;
+
         location ~ \.php$ {
                 include snippets/fastcgi-php.conf;
                 fastcgi_pass wordpress:9000;
@@ -24,30 +30,29 @@ server {
 }
 del
 
-cat << del > /etc/nginx/sites-enabled/website.conf
-server {
-        include mime.types;
-        listen 8080 ssl;
-        ssl_certificate         /ngnix/ssl/test.crt;       
-        ssl_certificate_key     /ngnix/ssl/test.key;
-        location / {
-                proxy_pass http://website:3000;
-        }
-}
-del
+# cat << del > /etc/nginx/sites-enabled/website.conf
+# server {
+#         include mime.types;
+#         listen 8080 ssl;
+#         ssl_certificate         /ngnix/ssl/test.crt;       
+#         ssl_certificate_key     /ngnix/ssl/test.key;
+#         location / {
+#                 proxy_pass http://website:3000;
+#         }
+# }
+# del
 
 
-cat << del > /etc/nginx/sites-enabled/adminer.conf
-server {
-        include mime.types;
-        listen 8081 ssl;
-        ssl_certificate         /ngnix/ssl/test.crt;       
-        ssl_certificate_key     /ngnix/ssl/test.key;
-        location / {
-                proxy_pass http://adminer:80;
-        }
-}
-del
+# cat << del > /etc/nginx/sites-enabled/adminer.conf
+# server {
+#         include mime.types;
+#         listen 8081 ssl;
+#         ssl_certificate         /ngnix/ssl/test.crt;       
+#         ssl_certificate_key     /ngnix/ssl/test.key;
+#         location / {
+#                 proxy_pass http://adminer:80;
+#         }
+# }
+# del
 
-nginx -t
 nginx -g 'daemon off;'

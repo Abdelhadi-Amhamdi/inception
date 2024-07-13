@@ -1,7 +1,8 @@
 all:
 	mkdir -p /home/aamhamdi/data/ma
 	mkdir -p /home/aamhamdi/data/wp
-	docker-compose -f srcs/docker-compose.yml up  --no-deps
+	docker-compose -f srcs/docker-compose.yml build --pull
+	docker-compose -f srcs/docker-compose.yml up -d
 
 stop:
 	docker-compose -f srcs/docker-compose.yml down
@@ -21,8 +22,8 @@ cleanv:
 
 clean: cleani cleanc cleanv
 
-re:
-	docker-compose -f srcs/docker-compose.yml up --build
+re: stop
+	docker-compose -f srcs/docker-compose.yml up --build -d
 
 
 
