@@ -30,29 +30,34 @@ server {
 }
 del
 
-# cat << del > /etc/nginx/sites-enabled/website.conf
-# server {
-#         include mime.types;
-#         listen 8080 ssl;
-#         ssl_certificate         /ngnix/ssl/test.crt;       
-#         ssl_certificate_key     /ngnix/ssl/test.key;
-#         location / {
-#                 proxy_pass http://website:3000;
-#         }
-# }
-# del
+cat << del > /etc/nginx/sites-enabled/website.conf
+server {
+        include mime.types;
+        listen 8082 ssl;
+        ssl_certificate         /ngnix/ssl/test.crt;
+        ssl_certificate_key     /ngnix/ssl/test.key;
+        location / {
+                proxy_pass http://website:3000;
+        }
+}
+del
 
 
-# cat << del > /etc/nginx/sites-enabled/adminer.conf
-# server {
-#         include mime.types;
-#         listen 8081 ssl;
-#         ssl_certificate         /ngnix/ssl/test.crt;       
-#         ssl_certificate_key     /ngnix/ssl/test.key;
-#         location / {
-#                 proxy_pass http://adminer:80;
-#         }
-# }
-# del
+cat << del > /etc/nginx/sites-enabled/adminer.conf
+server {
+        include mime.types;
+        listen 8081 ssl;
+        ssl_certificate         /ngnix/ssl/test.crt;       
+        ssl_certificate_key     /ngnix/ssl/test.key;
+
+        root /var/www/adminer;
+        index index.php index.html;
+
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass adminer:9100;
+        }
+}
+del
 
 nginx -g 'daemon off;'

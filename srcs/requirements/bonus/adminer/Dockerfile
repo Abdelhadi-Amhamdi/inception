@@ -1,12 +1,15 @@
-FROM debian
+FROM debian:bullseye 
 
 RUN apt update
-RUN apt install php curl php-mysql -y
-RUN curl -L https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1.php > /var/www/html/index.php
-RUN rm -f /var/www/html/index.html
-RUN echo "ServerName aamhamdi42.fr" >> /etc/apache2/apache2.conf
-RUN sed -i 's/^Listen 80/Listen 80/' /etc/apache2/ports.conf 
+RUN apt install curl -y
+RUN apt install php php-fpm php-mysql -y --no-install-recommends
 
-EXPOSE 80
+RUN mkdir -p /var/www/adminer; mkdir -p /run/php; \
+sed -i 's/^listen =.*/listen = 9100/' /etc/php/7.4/fpm/pool.d/www.conf;
 
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+RUN curl -L https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1.php > /var/www/adminer/index.php; \
+rm -f /var/www/html
+
+EXPOSE 9100
+
+CMD ["/usr/sbin/php-fpm7.4", "-F"]

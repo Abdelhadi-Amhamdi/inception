@@ -1,13 +1,13 @@
 
 
-FROM debian
+FROM debian:bullseye
 
 
 WORKDIR /website
 
 
 RUN apt -y update
-RUN apt -y install nodejs npm
+RUN apt -y install npm --no-install-recommends
 
 COPY package.json .
 RUN npm install
