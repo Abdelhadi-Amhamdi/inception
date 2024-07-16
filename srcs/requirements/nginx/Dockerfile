@@ -1,11 +1,10 @@
-
-
 FROM debian:bullseye
 
-WORKDIR /ngnix
-
 RUN apt -y update;
+
 RUN apt-get -y install nginx openssl --no-install-recommends
+
+WORKDIR /nginx
 
 COPY . .
 

@@ -3,22 +3,19 @@
 mkdir -p /var/www/wordpress/
 
 mkdir -p ssl/
-openssl genrsa -out /ngnix/ssl/test.key 2048;
-openssl req -new -key /ngnix/ssl/test.key -out /ngnix/ssl/test.csr \
-        -subj "/C=US/ST=New York/L=New York City/O=test/OU=IT/CN=127.0.0.1"
-openssl x509 -req -days 365 -in /ngnix/ssl/test.csr \
-        -signkey /ngnix/ssl/test.key -out /ngnix/ssl/test.crt
+
+openssl req -x509 -nodes -out /nginx/ssl/inc.crt -keyout \
+        /nginx/ssl/inc.key -subj "/C=MO/ST=KH/L=KH/O=42/OU=IT/CN=$HOST_NAME"
 
 cat << del > /etc/nginx/sites-enabled/wordpress.conf
 server {
 
         include mime.types;
         listen 443 ssl;
-        server_name aamhamdi42.fr www.aamhamdi42.fr;
 
         ssl_protocols TLSv1.3;
-        ssl_certificate         /ngnix/ssl/test.crt;
-        ssl_certificate_key     /ngnix/ssl/test.key;
+        ssl_certificate         /nginx/ssl/inc.crt;
+        ssl_certificate_key     /nginx/ssl/inc.key;
 
         root /var/www/wordpress;
         index index.php index.html;
@@ -34,8 +31,10 @@ cat << del > /etc/nginx/sites-enabled/website.conf
 server {
         include mime.types;
         listen 8082 ssl;
-        ssl_certificate         /ngnix/ssl/test.crt;
-        ssl_certificate_key     /ngnix/ssl/test.key;
+
+        ssl_certificate         /nginx/ssl/inc.crt;
+        ssl_certificate_key     /nginx/ssl/inc.key;
+        
         location / {
                 proxy_pass http://website:3000;
         }
@@ -47,8 +46,9 @@ cat << del > /etc/nginx/sites-enabled/adminer.conf
 server {
         include mime.types;
         listen 8081 ssl;
-        ssl_certificate         /ngnix/ssl/test.crt;       
-        ssl_certificate_key     /ngnix/ssl/test.key;
+
+        ssl_certificate         /nginx/ssl/inc.crt;
+        ssl_certificate_key     /nginx/ssl/inc.key;
 
         root /var/www/adminer;
         index index.php index.html;

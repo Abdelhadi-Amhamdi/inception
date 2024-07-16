@@ -8,4 +8,4 @@ echo "GRANT ALL PRIVILEGES ON *.* TO '$SQL_USER'@'%';" | mysql
 echo "FLUSH PRIVILEGES;" | mysql
 
 mysqladmin -u root -p shutdown -p"$SQL_PASS"
-mysqld --user=mysql --console
+mysqld_safe

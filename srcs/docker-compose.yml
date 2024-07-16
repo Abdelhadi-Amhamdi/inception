@@ -44,6 +44,8 @@ services:
     depends_on:
       - wordpress
     restart: always
+    env_file:
+      - .env
 
   redis:
     container_name: redis
@@ -60,7 +62,7 @@ services:
     ports:
       - 21:21
     volumes:
-      - wp:/home/aamhamdi/ftp
+      - wp:/home/aamhamdi/ftp/files
     env_file:
       - .env
     restart : always
