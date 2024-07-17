@@ -20,7 +20,7 @@ if ! wp core is-installed --allow-root; then
 	wp config create --dbname=$SQL_DB --dbuser=$SQL_USER --dbpass=$SQL_PASS \
 	--dbhost=mariadb --allow-root
 
-	wp core install --url="www.aamhamdi42.fr" --title="inception" --admin_user="$WP_USER" \
+	wp core install --url="$HOST_NAME" --title="inception" --admin_user="$WP_USER" \
 	--admin_password="$WP_PASS" --admin_email="$WP_MAIL" --allow-root
 
 	wp plugin install redis-cache --activate --allow-root

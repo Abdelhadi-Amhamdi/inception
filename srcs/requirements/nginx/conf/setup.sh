@@ -1,7 +1,5 @@
 #!/bin/bash
 
-mkdir -p /var/www/wordpress/
-
 mkdir -p ssl/
 
 openssl req -x509 -nodes -out /nginx/ssl/inc.crt -keyout \
@@ -13,7 +11,7 @@ server {
         include mime.types;
         listen 443 ssl;
 
-        ssl_protocols TLSv1.3;
+        ssl_protocols           TLSv1.3;
         ssl_certificate         /nginx/ssl/inc.crt;
         ssl_certificate_key     /nginx/ssl/inc.key;
 
@@ -32,6 +30,7 @@ server {
         include mime.types;
         listen 8082 ssl;
 
+         ssl_protocols          TLSv1.3;
         ssl_certificate         /nginx/ssl/inc.crt;
         ssl_certificate_key     /nginx/ssl/inc.key;
         
@@ -47,6 +46,7 @@ server {
         include mime.types;
         listen 8081 ssl;
 
+         ssl_protocols          TLSv1.3;
         ssl_certificate         /nginx/ssl/inc.crt;
         ssl_certificate_key     /nginx/ssl/inc.key;
 
