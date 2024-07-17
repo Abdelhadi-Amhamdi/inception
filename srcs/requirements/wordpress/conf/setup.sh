@@ -29,7 +29,7 @@ if ! wp core is-installed --allow-root; then
 	wp config set WP_REDIS_HOST redis --allow-root
 	wp plugin update --all --allow-root
 
-	chown -R www-data:www-data /var/www/wordpress
+	chown -R www-data:www-data /var/www/wordpress/*
 	chmod -R +rw /var/www/wordpress
 else
 	echo "wordpress is already installed"

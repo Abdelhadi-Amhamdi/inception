@@ -4,12 +4,13 @@ service vsftpd start
 
 mkdir -p /home/$FTP_USER/ftp
 
-sed -i -r "s/#write_enable=YES/write_enable=YES/1" /etc/vsftpd.conf
-sed -i -r "s/#chroot_local_user=YES/chroot_local_user=YES/1" /etc/vsftpd.conf
+sed -i "s/#write_enable=YES/write_enable=YES/1" /etc/vsftpd.conf
+sed -i "s/#chroot_local_user=YES/chroot_local_user=YES/1" /etc/vsftpd.conf
  
 adduser $FTP_USER --disabled-password
 echo "$FTP_USER:$FTP_PASS" | /usr/sbin/chpasswd
 echo "$FTP_USER" >> /etc/vsftpd.userlist
+
 
 chown nobody:nogroup /home/$FTP_USER/ftp
 mkdir -p /home/$FTP_USER/ftp/files

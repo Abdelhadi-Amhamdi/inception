@@ -67,6 +67,8 @@ services:
     restart : always
     networks:
       - inception
+    depends_on:
+      - wordpress
 
   adminer:
     container_name: adminer

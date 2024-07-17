@@ -7,8 +7,7 @@ all:
 stop:
 	docker-compose -f srcs/docker-compose.yml down
 
-re: stop
-	docker-compose -f srcs/docker-compose.yml up --build
+
 
 
 
