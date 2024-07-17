@@ -23,6 +23,8 @@ if ! wp core is-installed --allow-root; then
 	wp core install --url="$HOST_NAME" --title="inception" --admin_user="$WP_USER" \
 	--admin_password="$WP_PASS" --admin_email="$WP_MAIL" --allow-root
 
+	wp user create $WP_USER1 --user_pass=$WP_PASS1 $WP_MAIL1 --role=author --allow-root
+
 	wp plugin install redis-cache --activate --allow-root
 	wp config set WP_REDIS_HOST redis --allow-root
 	wp plugin update --all --allow-root
