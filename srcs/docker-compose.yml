@@ -49,7 +49,7 @@ services:
   redis:
     container_name: redis
     build: ./requirements/bonus/redis
-    image: redis 
+    image: redis:aamhamdi
     networks:
       - inception
     restart : always
@@ -57,7 +57,7 @@ services:
   ftp:
     container_name: ftp
     build: ./requirements/bonus/ftp
-    image: ftp
+    image: ftp:aamhamdi
     ports:
       - 21:21
     volumes:
@@ -73,7 +73,7 @@ services:
     build: ./requirements/bonus/adminer
     ports:
       - 80:80
-    image: adminer
+    image: adminer:aamhamdi
     networks:
       - inception
     depends_on:
@@ -85,7 +85,7 @@ services:
   website:
     container_name: website
     build: ./requirements/bonus/website
-    image: website
+    image: website:aamhamdi
     ports:
       - 3000:3000
     networks:
@@ -95,7 +95,7 @@ services:
   cadvisor:
     container_name: cadvisor
     build : ./requirements/bonus/cadvisor
-    image : cadvisor:aamhamddi
+    image : cadvisor:aamhamdi
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
