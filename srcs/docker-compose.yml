@@ -6,7 +6,7 @@ services:
     build: ./requirements/mariadb
     image: mariadb:aamhamdi
     volumes:
-      - ma:/var/lib/mysql
+      - mariadb:/var/lib/mysql
     networks:
       - inception
     env_file:
@@ -18,7 +18,7 @@ services:
     build: ./requirements/wordpress
     image: wordpress:aamhamdi
     volumes:
-      - wp:/var/www/wordpress
+      - wordpress:/var/www/wordpress
     networks:
       - inception
     depends_on:
@@ -36,8 +36,8 @@ services:
       - 8082:8082
       - 8081:8081
     volumes:
-      - wp:/var/www/wordpress
-      - ad:/var/www/adminer
+      - wordpress:/var/www/wordpress
+      - adminer:/var/www/adminer
     networks:
       - inception
     depends_on:
@@ -61,7 +61,7 @@ services:
     ports:
       - 21:21
     volumes:
-      - wp:/home/aamhamdi/ftp/files
+      - wordpress:/home/aamhamdi/ftp/files
     env_file:
       - .env
     restart : always
@@ -79,7 +79,7 @@ services:
     depends_on:
       - mariadb
     volumes:
-      - ad:/var/www/adminer
+      - adminer:/var/www/adminer
     restart : always
   
   website:
@@ -108,22 +108,22 @@ services:
     restart: always
 
 volumes:
-  wp :
-    name: wp
+  wordpress :
+    name: wordpress
     driver : local
     driver_opts:
       type: none
-      device: /home/aamhamdi/data/wp
+      device: /home/aamhamdi/data/wordpress
       o: bind
-  ma :
-    name : ma
+  mariadb :
+    name : mariadb
     driver : local
     driver_opts:
       type: none
-      device: /home/aamhamdi/data/ma
+      device: /home/aamhamdi/data/mariadb
       o: bind
-  ad :
-    name : ad
+  adminer :
+    name : adminer
 
 networks:
   inception:

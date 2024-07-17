@@ -1,9 +1,0 @@
-
-
-
-images 
-An image is a read-only template with instructions for creating a Docker container.
-Often, an image is based on another image.
-
-Containers
-A container is a runnable instance of an image. You can create, start, stop, move, or delete a container using the Docker API or CLI. You can connect a container to one or more networks, attach storage to it, or even create a new image based on its current state.
